@@ -9,10 +9,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class APIController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function login (Request $request)
     {
         $input = $request->only('email', 'password');
@@ -28,16 +24,12 @@ class APIController extends Controller
         return $this->respondWithToken($token);
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function register(Request $request)
     {
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password,
+            'password' => bcrypt($request->password),
         ]);
 
         $token = JWTAuth::fromUser($user);
