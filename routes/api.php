@@ -20,9 +20,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
+Route::apiResource('pizza', 'PizzaController');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
-    Route::apiResource('pizza', 'PizzaController');
     Route::apiResource('order', 'OrderController');
     Route::apiResource('shopping-cart-item', 'ShoppingCartItemController');
 });
