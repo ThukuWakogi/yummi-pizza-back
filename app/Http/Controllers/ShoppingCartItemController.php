@@ -50,7 +50,19 @@ class ShoppingCartItemController extends Controller
 
         if (is_null($shoppingCartItem)) return response()->json(["message" => "Record Not Found!"], 404);
 
-        return response()->json($shoppingCartItem, 200);
+        return response()->json(
+            [
+                "id" => $shoppingCartItem->id,
+                "order_id" => $shoppingCartItem->order_id,
+                "pizza_id" => $shoppingCartItem->pizza_id,
+                "pizza_quantity" => $shoppingCartItem->pizza_quantity,
+                "created_at" => $shoppingCartItem->created_at,
+                "updated_at" => $shoppingCartItem->updated_at,
+                "order" => $shoppingCartItem->order,
+                "pizza" => $shoppingCartItem->pizza,
+            ],
+            200
+        );
     }
 
     /**
@@ -79,7 +91,19 @@ class ShoppingCartItemController extends Controller
 
         $shoppingCartItem->update($request->all());
 
-        return response()->json($shoppingCartItem, 200);
+        return response()->json(
+            [
+                "id" => $shoppingCartItem->id,
+                "order_id" => $shoppingCartItem->order_id,
+                "pizza_id" => $shoppingCartItem->pizza_id,
+                "pizza_quantity" => $shoppingCartItem->pizza_quantity,
+                "created_at" => $shoppingCartItem->created_at,
+                "updated_at" => $shoppingCartItem->updated_at,
+                "order" => $shoppingCartItem->order,
+                "pizza" => $shoppingCartItem->pizza,
+            ],
+            200
+        );
     }
 
     /**

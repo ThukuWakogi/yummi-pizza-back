@@ -50,7 +50,18 @@ class PizzaController extends Controller
 
         if (is_null($pizza)) return response()->json(["message" => "Record Not Found!"], 404);
 
-        return response()->json($pizza, 200);
+        return response()->json(
+            [
+                "id" => $pizza->id,
+                "name" => $pizza->name,
+                "description" => $pizza->description,
+                "price" => $pizza->price,
+                "created_at" => $pizza->created_at,
+                "updated_at" => $pizza->updated_at,
+                "shopping_cart_items" => $pizza->shoppingCartItems
+            ],
+            200
+        );
     }
 
     /**

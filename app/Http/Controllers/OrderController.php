@@ -50,7 +50,18 @@ class OrderController extends Controller
 
         if (is_null($order)) return response()->json(["message" => "Record Not Found!"], 404);
 
-        return response()->json($order, 200);
+        return response()->json(
+            [
+                "id" => $order->id,
+                "user_id" => $order->user_id,
+                "checked_out" => $order->checked_out,
+                "created_at" => $order->created_at,
+                "updated_at" => $order->updated_at,
+                "customer" => $order->user,
+                "shopping_cart_items" => $order->shoppingCartItem
+            ],
+            200
+        );
     }
 
     /**
