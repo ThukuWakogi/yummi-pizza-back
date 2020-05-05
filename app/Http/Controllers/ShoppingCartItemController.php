@@ -14,7 +14,7 @@ class ShoppingCartItemController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(ShoppingCartItem::all(), 200);
     }
 
     /**
@@ -44,9 +44,13 @@ class ShoppingCartItemController extends Controller
      * @param  \App\Models\ShoppingCartItem  $shoppingCartItem
      * @return \Illuminate\Http\Response
      */
-    public function show(ShoppingCartItem $shoppingCartItem)
+    public function show($id)
     {
-        //
+        $shoppingCartItem = ShoppingCartItem::find($id);
+
+        if (is_null($shoppingCartItem)) return response()->json(["message" => "Record Not Found!"], 404);
+
+        return response()->json($shoppingCartItem, 200);
     }
 
     /**
@@ -67,9 +71,15 @@ class ShoppingCartItemController extends Controller
      * @param  \App\Models\ShoppingCartItem  $shoppingCartItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ShoppingCartItem $shoppingCartItem)
+    public function update(Request $request, $id)
     {
-        //
+        $shoppingCartItem = ShoppingCartItem::find($id);
+
+        if(is_null($shoppingCartItem)) return response()->json(["message" => "Record not found"], 404);
+
+        $shoppingCartItem->update($request->all());
+
+        return response()->json($shoppingCartItem, 200);
     }
 
     /**

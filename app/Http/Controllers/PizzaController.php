@@ -44,9 +44,13 @@ class PizzaController extends Controller
      * @param  \App\Models\Pizza  $pizza
      * @return \Illuminate\Http\Response
      */
-    public function show(Pizza $pizza)
+    public function show($id)
     {
-        //
+        $pizza = Pizza::find($id);
+
+        if (is_null($pizza)) return response()->json(["message" => "Record Not Found!"], 404);
+
+        return response()->json($pizza, 200);
     }
 
     /**

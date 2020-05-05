@@ -14,7 +14,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Order::all(), 200);
     }
 
     /**
@@ -44,9 +44,13 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show($id)
     {
-        //
+        $order = Order::find($id);
+
+        if (is_null($order)) return response()->json(["message" => "Record Not Found!"], 404);
+
+        return response()->json($order, 200);
     }
 
     /**
@@ -67,9 +71,15 @@ class OrderController extends Controller
      * @param  \App\Models\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+
+        if(is_null($order)) return response()->json(["message" => "Record not found"], 404);
+
+        $order->update($request->all());
+
+        return reponse()->json($order, 200);
     }
 
     /**

@@ -23,4 +23,6 @@ Route::post('register', 'ApiController@register');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::apiResource('pizza', 'PizzaController');
+    Route::apiResource('order', 'OrderController');
+    Route::apiResource('shopping-cart-item', 'ShoppingCartItemController');
 });
