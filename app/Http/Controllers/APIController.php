@@ -37,6 +37,10 @@ class APIController extends Controller
         return $this->respondWithToken($token);
     }
 
+    public function getUserDetailsFromToken(Request $request) {
+        return response()->json(JWTAuth::toUser(explode(' ', $request->header('Authorization'))[1]), 200);
+    }
+
     protected function respondWithToken($token)
     {
         return response()->json([

@@ -23,6 +23,7 @@ Route::post('register', 'ApiController@register');
 Route::apiResource('pizza', 'PizzaController');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
+    Route::get('udft', 'ApiController@getUserDetailsFromToken');
     Route::apiResource('order', 'OrderController');
     Route::apiResource('shopping-cart-item', 'ShoppingCartItemController');
 });
