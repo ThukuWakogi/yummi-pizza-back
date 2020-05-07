@@ -11,6 +11,10 @@ class APIController extends Controller
 {
     public function login (Request $request)
     {
+        $validate = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
         $input = $request->only('email', 'password');
         $token = null;
 
@@ -26,6 +30,11 @@ class APIController extends Controller
 
     public function register(Request $request)
     {
+        $validate = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required'
+        ]);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
