@@ -58,7 +58,7 @@ class PizzaController extends Controller
                 "price" => $pizza->price,
                 "created_at" => $pizza->created_at,
                 "updated_at" => $pizza->updated_at,
-                "shopping_cart_items" => $pizza->shoppingCartItems
+                "shopping_carts" => $pizza->shoppingCartItems
             ],
             200
         );
