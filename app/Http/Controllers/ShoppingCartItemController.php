@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ShoppingCartItem;
 use Illuminate\Http\Request;
+use JWTAuth;
+use App\Models\Order;
 
 class ShoppingCartItemController extends Controller
 {
@@ -35,7 +37,47 @@ class ShoppingCartItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'pizza_id' => 'required|integer',
+            'pizza_quantity' => 'required|numeric'
+        ]);
+        $user = JWTAuth::user();
+
+        if (count($user->pendingOrder) > 0)
+        {
+            $shoppingCartItem = ShoppingCartItem::create([
+                'order_id' => $user->pendingOrder[0]->id,
+                'pizza_id' => $request->input('pizza_id'),
+                'pizza_quantity' => $request->input('pizza_quantity'),
+            ]);
+
+            return response()->json(
+                [
+                    'pendingOrder' => $user->pendingOrder[0],
+                    'shoppingCart' => ShoppingCartItem::where('order_id', $user->pendingOrder[0]->id)->get()
+                ],
+                201
+            );
+        }
+        else
+        {
+            $order = Order::create(['user_id' => $user->id]);
+            $shoppingCartItem = ShoppingCartItem::create([
+                'order_id' => $order->id,
+                'pizza_id' => $request->input('pizza_id'),
+                'pizza_quantity' => $request->input('pizza_quantity'),
+            ]);
+
+            return response()->json(
+                [
+                    'pendingOrder' => $order,
+                    'shoppingCart' => ShoppingCartItem::where('order_id', $order->id)->get()
+                ],
+                201
+            );
+        }
+
+        return response()->json(['from' => 'shopping cart'], 200);
     }
 
     /**
