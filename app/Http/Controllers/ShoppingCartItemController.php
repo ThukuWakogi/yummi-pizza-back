@@ -39,7 +39,7 @@ class ShoppingCartItemController extends Controller
     {
         $validate = $request->validate([
             'pizza_id' => 'required|integer',
-            'pizza_quantity' => 'required|numeric'
+            'pizza_quantity' => 'required|integer'
         ]);
         $user = JWTAuth::user();
 
@@ -59,7 +59,8 @@ class ShoppingCartItemController extends Controller
                 201
             );
         }
-        else
+
+        if (count($user->pendingOrder) == 0)
         {
             $order = Order::create(['user_id' => $user->id]);
             $shoppingCartItem = ShoppingCartItem::create([
@@ -77,7 +78,7 @@ class ShoppingCartItemController extends Controller
             );
         }
 
-        return response()->json(['from' => 'shopping cart'], 200);
+        return response()->json(['message' => 'We are not supposed to reach here'], 400);
     }
 
     /**
