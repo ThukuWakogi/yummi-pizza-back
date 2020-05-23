@@ -42,7 +42,7 @@ class APIController extends Controller
                 'email' => $user->email,
                 'pendingOrder' => $user->pendingOrder,
                 'shoppingCart' => count($user->pendingOrder) > 0
-                    ? ShoppingCartItem::where('order_id', $user->pendingOrder[0]->id)->get()
+                    ? $this->expandShoppingCart($user->pendingOrder)
                     : []
             ]
         ]);
@@ -74,7 +74,7 @@ class APIController extends Controller
                 'email' => $user->email,
                 'pendingOrder' => $user->pendingOrder,
                 'shoppingCart' => count($user->pendingOrder) > 0
-                    ? ShoppingCartItem::where('order_id', $user->pendingOrder[0]->id)->get()
+                    ? $this->expandShoppingCart($user->pendingOrder)
                     : []
             ]
         ]);
@@ -93,8 +93,34 @@ class APIController extends Controller
             'email' => $user->email,
             'pendingOrder' => $user->pendingOrder,
             'shoppingCart' => count($user->pendingOrder) > 0
-                ? ShoppingCartItem::where('order_id', $user->pendingOrder[0]->id)->get()
+                ? $this->expandShoppingCart($user->pendingOrder)
                 : []
         ], 200);
+    }
+
+    private function expandShoppingCart($pendingOrder) {
+        $expandedShoppingCart = [];
+        $shoppingCart = ShoppingCartItem::where('order_id', $pendingOrder[0]->id)->get();
+        foreach($shoppingCart as $item)
+        {
+            array_push(
+                $expandedShoppingCart,
+                [
+                    'id' => $item->id,
+                    'order_id' => $item->order_id,
+                    'pizza' =>
+                        [
+                            'id' => $item->pizza->id,
+                            'name' => $item->pizza->name,
+                            'price' => $item->pizza->price
+                        ],
+                    'pizza_quantity' => $item->pizza_quantity,
+                    'created_at' => $item->created_at,
+                    'updated_at' => $item->updated_at,
+                ]
+            );
+        }
+
+        return $expandedShoppingCart;
     }
 }
