@@ -90,7 +90,7 @@ class OrderController extends Controller
 
         $order->update($request->all());
 
-        return reponse()->json($order, 200);
+        return response()->json($order, 200);
     }
 
     /**

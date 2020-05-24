@@ -53,8 +53,8 @@ class ShoppingCartItemController extends Controller
 
             return response()->json(
                 [
-                    'pendingOrder' => $user->pendingOrder[0],
-                    'shoppingCart' => ShoppingCartItem::where('order_id', $user->pendingOrder[0]->id)->get()
+                    'pendingOrder' => $user->pendingOrder,
+                    'shoppingCart' => $this->expandShoppingCart($user->pendingOrder)
                 ],
                 201
             );
@@ -71,8 +71,8 @@ class ShoppingCartItemController extends Controller
 
             return response()->json(
                 [
-                    'pendingOrder' => $order,
-                    'shoppingCart' => ShoppingCartItem::where('order_id', $order->id)->get()
+                    'pendingOrder' => [$order],
+                    'shoppingCart' => $this->expandShoppingCart([$order])
                 ],
                 201
             );
@@ -158,5 +158,31 @@ class ShoppingCartItemController extends Controller
     public function destroy(ShoppingCartItem $shoppingCartItem)
     {
         //
+    }
+
+    private function expandShoppingCart($pendingOrder) {
+        $expandedShoppingCart = [];
+        $shoppingCart = ShoppingCartItem::where('order_id', $pendingOrder[0]->id)->get();
+        foreach($shoppingCart as $item)
+        {
+            array_push(
+                $expandedShoppingCart,
+                [
+                    'id' => $item->id,
+                    'order_id' => $item->order_id,
+                    'pizza' =>
+                        [
+                            'id' => $item->pizza->id,
+                            'name' => $item->pizza->name,
+                            'price' => $item->pizza->price
+                        ],
+                    'pizza_quantity' => $item->pizza_quantity,
+                    'created_at' => $item->created_at,
+                    'updated_at' => $item->updated_at,
+                ]
+            );
+        }
+
+        return $expandedShoppingCart;
     }
 }
