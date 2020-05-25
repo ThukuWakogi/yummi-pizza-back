@@ -4,13 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <!-- <link rel="icon" href="../../public/assets/favicon.ico" /> -->
-    <link rel="icon" href="{{ asset('assets/favicon.ico') }}" />
+    <link rel="icon" href="{{ secure_asset('assets/favicon.ico') }}" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta name="description" content="Web site created using create-react-app" />
-    <link rel="apple-touch-icon" href="{{ asset('assets/logo192.png') }}" />
-    <link rel="manifest" href="{{ asset('assets/manifest.json') }}" />
-    <link href="{{ asset('assets/static/css/main.df6c69e3.chunk.css') }}" rel="stylesheet">
+    <link rel="apple-touch-icon" href="{{ secure_asset('assets/logo192.png') }}" />
+    <link rel="manifest" href="{{ secure_asset('assets/manifest.json') }}" />
+    <link href="{{ secure_asset('assets/static/css/main.df6c69e3.chunk.css') }}" rel="stylesheet">
     <title>Yummi Pizza</title>
 </head>
 
@@ -91,8 +91,8 @@
             t()
         }([])
     </script>
-    <script src="{{ asset('assets/static/js/2.f9fe54d2.chunk.js') }}"></script>
-    <script src="{{ asset('assets/static/js/main.eb9f807d.chunk.js') }}"></script>
+    <script src="{{ secure_asset('assets/static/js/2.f9fe54d2.chunk.js') }}"></script>
+    <script src="{{ secure_asset('assets/static/js/main.eb9f807d.chunk.js') }}"></script>
 </body>
 
 </html>
