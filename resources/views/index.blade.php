@@ -92,7 +92,7 @@
         }([])
     </script>
     <script src="{{ asset('assets/static/js/2.f9fe54d2.chunk.js') }}"></script>
-    <script src="{{ asset('assets/static/js/main.bbadcae8.chunk.js') }}"></script>
+    <script src="{{ asset('assets/static/js/main.eb9f807d.chunk.js') }}"></script>
 </body>
 
 </html>
